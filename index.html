@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Link to CSS -->
+     <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Visual System</title>
+    <style>
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: rgb(10, 9, 9);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(76, 175, 80, 0.9);
+            text-align: center;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #78d67d;
+        }
+    
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #333;
+      color: white;
+      overflow: hidden;
+      transition: left 0.3s ease;
+    }
+    #sidebar.open {
+      left: 0;
+    }
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #sidebar ul li {
+      padding: 15px;
+      border-bottom: 1px solid #444;
+    }
+    #sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+    }
+    #menuButton {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      z-index: 1000; /* Ensure it stays above the sidebar */
+    }
+    #menuButton.open {
+        left: 265px; /* Adjust position when the sidebar is open */
+    }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .random-facts {
+            margin: 20px 0;
+            padding: 10px 15px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .random-facts:hover {
+            background-color: #1E88E5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: black;
+        }
+    </style>
+    <!-- Link to JS -->
+    <script src="script.js"></script> 
+</head>
+<body>
+    <div class="progress-bar" id="progress-bar"></div>
+    <button class="toggle-button" onclick="toggleSidebar()">Menu</button>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <li><a href="#" onclick="loadContent('introduction')">Introduction</a></li>
+                <li><a href="#" onclick="loadContent('role-of-light')">The Role of Light</a></li>
+                <li><a href="#" onclick="loadContent('photoreceptors')">Photoreceptors in the Retina</a></li>
+                <li><a href="#" onclick="loadContent('color-processing')">Color Processing in the Brain</a></li>
+                <li><a href="#" onclick="loadContent('color-deficiencies')">Color Deficiencies</a></li>
+                <li><a href="#" onclick="loadContent('conclusion')">Conclusion</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <header>
+                <h1>Creation of Colors in the Visual System</h1>
+            </header>
+            <section id="dynamic-content">
+                <p>The creation of colors in the visual system involves a complex process that begins with the differential stimulation of different types of photoreceptors in the eye. These photoreceptors, known as cones, are sensitive to different wavelengths of light, corresponding to red, green, and blue light. When light enters the eye, it stimulates these cones, which then emit outputs that are propagated through many layers of neurons.
+
+                    This process is further refined through opponent processes, which are mechanisms that interpret color in an antagonistic way. According to Hering’s opponent-process theory, there are three pairs of opposing colors: red vs. green, blue vs. yellow, and black vs. white. However, in the visual system, the activity of different receptor types is opposed, leading to a more complex interaction that goes beyond simple red-green and blue-yellow opposition.</p>
+                    <div class="image-container" id="first-page-image">
+                        <img src="color-vision-600.webp" alt="Color Vision Illustration">
+                    </div>
+                    <button class="random-facts" onclick="showRandomFact()">Show Random Fact</button>
+                <p id="fact-display"></p>
+            </section>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content" id="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");
+        }
+
+        function loadContent(topic) {
+            const content = {
+                introduction: `<h2>Introduction</h2>
+                <p>The creation of colors in the visual system is a fascinating process that allows humans to perceive the world in rich and vibrant hues.</p>
+                <div class="image-container">
+                   <img src="Know-The-Modes-And-Systems.jpg" alt="Know The Modes And Systems" />
+                </div>
+            `,
+
+                "role-of-light": `<h2>The Role of Light</h2><p>Color perception begins with light, a form of electromagnetic radiation. The visible spectrum, spanning wavelengths from 400 to 700 nanometers, is a small part of the electromagnetic spectrum. When light hits an object, some wavelengths are absorbed while others are reflected or transmitted, determining the color we perceive. For example, a red object reflects red wavelengths and absorbs the rest. Light enters the eye through the cornea and is focused by the lens onto the retina, where photoreceptor cells rods and cones detect it. Rods handle low-light vision, while cones, sensitive to blue, green, and red wavelengths, are responsible for color perception. The brain combines signals from these cones to create the full spectrum of colors. This process highlights light's critical role in vision, from its physical properties to how it interacts with our eyes and brain.</p>
+                <div class="image-container">
+                    <img src="vertical-visible-spectrum.webp" alt="vertical visible spectrum" />
+                </div>
+            `,
+                photoreceptors: `<h2>Photoreceptors in the Retina</h2><p>The human retina contains two types of photoreceptors: rods and cones.  Responsible for color vision and detailed sight in bright light, cones are concentrated in the central retina (fovea) and number about 6 million. They come in three types:</p>
+                    <ul>
+                        <li>Short-wavelength cones (S-cones) Sensitive to blue light (420 nm).</li>
+                        <li>Medium-wavelength cones (M-cones) Sensitive to green light (534 nm).</li>
+                        <li>Long-wavelength cones (L-cones) Sensitive to red light (564 nm).</li>
+                    </ul>
+                    <div class="image-container">
+                        <img src="Diagram_of_the_opponent_process.webp" alt="Diagram of the opponent process" />
+                    </div>
+                    <div class="image-container">
+                        <img src="color-vision-disorders.webp" alt="color vision disorders" />
+                    </div>
+            `,
+                "color-processing": `<h2>Color Processing in the Brain</h2><p>Color perception begins when signals from the cones in the retina are transmitted via the optic nerve to the brain. These signals are first processed in the lateral geniculate nucleus (LGN) of the thalamus and then sent to the visual cortex in the occipital lobe. In the visual cortex, the brain decodes the signals using opponent-process mechanisms, separating colors into red-green, blue-yellow, and black-white channels. This enables the brain to interpret millions of colors by combining inputs from the three cone types. Higher brain areas integrate these signals with context, memory, and lighting conditions, allowing us to perceive consistent and vibrant colors in different environments.</p>
+                    <div class="image-container">
+                        <img src="original-1664449894.webp" alt="original 1664449894" />
+                    </div>
+            `,
+                "color-deficiencies": `<h2>Color Deficiencies</h2><p>Color deficiencies occur when one or more types of cone cells in the retina are absent, malfunctioning, or less sensitive to light. The most common form is red-green color blindness, where individuals have difficulty distinguishing between red and green hues. This condition is often inherited and more prevalent in males. Other forms, like blue-yellow deficiencies and total color blindness (achromatopsia), are less common. While these deficiencies affect color perception, most individuals adapt to their condition and navigate the world effectively.</p>
+                    <div class="image-container">
+                        <img src="Color_Deficiency_Ishihara_Test_AdobeStock_114210620.webp" alt="Color Deficiency Ishihara Test AdobeStock 114210620 " />
+                    </div>
+            `,
+                conclusion: `<h2>Conclusion</h2><p>The creation of colors in the visual system is a fascinating integration of physics, biology, and neuroscience. It begins with the detection of light by specialized photoreceptors in the retina and continues with intricate processing in the brain to interpret and construct the rich spectrum of colors we perceive. This complex system not only enables us to navigate and understand our environment but also highlights the incredible sophistication of human vision, allowing us to experience the world in vibrant and dynamic hues.</p>
+                   <div class="image-container">
+                        <img src="Color_Classification.webp" alt="Color Classification" />
+                    </div>
+            `,
+            };
+
+            const dynamicContent = document.getElementById("dynamic-content");
+            dynamicContent.innerHTML = content[topic] || `<p>Content not found!</p>`;
+        }
+
+        function showRandomFact() {
+            const facts = [
+                "The human eye can distinguish about 10 million colors.",
+                "Colorblindness affects about 8% of men globally.",
+                "The retina contains 120 million rods and 6 million cones.",
+                "Cones are responsible for color vision, while rods are specialized for low-light vision.",
+                "Blue light has the shortest wavelength in the visible spectrum, while red light has the longest.",
+                "The human eye perceives green most vividly due to the high sensitivity of medium-wavelength cones.",
+                "The visual cortex processes color information in less than 13 milliseconds.",
+                "There are three types of cone cells in the human retina: S-cones (blue), M-cones (green), and L-cones (red).",
+                "Each cone type is sensitive to a specific range of wavelengths, but their ranges overlap to create the perception of continuous colors.",
+                "Color perception can be influenced by surrounding colors due to a phenomenon called simultaneous contrast.",
+                "Optical illusions can trick the brain into perceiving colors differently than they actually are.",
+                "Bees can see ultraviolet patterns on flowers that guide them to nectar.",
+                "Red is the first color a baby can see after birth.",
+            ];
+            const randomFact = facts[Math.floor(Math.random() * facts.length)];
+            document.getElementById("fact-display").textContent = randomFact;
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        window.addEventListener("scroll", () => {
+            const progressBar = document.getElementById("progress-bar");
+            const scrollTotal = document.body.scrollHeight - window.innerHeight;
+            progressBar.style.width = (window.scrollY / scrollTotal) * 100 + "%";
+        });
+    </script>
+</body>
+</html>
